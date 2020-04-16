@@ -1,0 +1,36 @@
+<%-
+  mem = case job_type
+          when "small"
+            "20"
+          when "medium"
+            "64"
+          when "large"
+            "256"
+          else
+            "5"
+          end
+  ppn = case job_type
+          when "quick"
+            "1"
+          when "small"
+            "4"
+          else
+            "8"
+          end
+  queue = case job_type
+          when "medium"
+            "medmem"
+          when "large"
+            "bigmem"
+          end
+-%>
+---
+batch_connect:
+  template: "basic"
+script:
+  email: <%= ENV["USER"] %>@mcw.edu
+  queue_name: "<%= queue %>"
+  native:
+    resources:
+      nodes: "1:ppn=<%= ppn %>"
+      mem: "<%= mem %>gb"

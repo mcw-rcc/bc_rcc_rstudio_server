@@ -1,0 +1,19 @@
+---
+name: RStudio Server
+category: Interactive Apps
+subcategory: Carley MPI Cluster
+role: batch_connect
+description: |
+  This app will launch [RStudio Server], an IDE for [R], on a cluster node.
+
+  [RStudio Server]: https://www.rstudio.com/products/rstudio-server/
+  [R]: https://www.r-project.org/
+
+  <div class="alert alert-info" >
+    <strong>Recent updates</strong>
+    <ul>
+      <li>Update RStudio Server version 1.2.5042.</li>
+      <li>Added multi-core and high memory instances.</li>
+      <li>Added quick instance for faster response. Larger instances may take longer to start.</li>
+    </ul>
+  </div>
