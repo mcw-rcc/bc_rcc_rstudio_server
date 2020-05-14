@@ -1,12 +1,14 @@
 ---
 cluster: "carley"
 form:
-  - modules
+  - Rserver
+  - Rapp
   - job_type
   - bc_num_hours
   - bc_email_on_started
 attributes:
-  modules: "rstudio-server/1.2.5042"
+  Rserver: "rstudio-server/1.2.5042"
+  Rapp: "R/3.5.0"
   bc_num_hours:
     min: 1
     max: 8
