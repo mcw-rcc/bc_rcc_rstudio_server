@@ -33,10 +33,6 @@ EOL
 )
 chmod 700 "${RSESSION_WRAPPER_FILE}"
 
-# use PROOT
-module load proot/5.1.1
-RSERVER_LAUNCHER="proot -b $(mktemp -d):/tmp "
-
 # Set working directory to home directory
 cd "${HOME}"
 
@@ -46,9 +42,10 @@ module list
 # Launch the RStudio Server
 echo "Starting up rserver..."
 set -x
-${RSERVER_LAUNCHER}rserver \
+rserver \
   --www-port ${port} \
   --auth-none 0 \
   --auth-pam-helper-path "${RSTUDIO_AUTH}" \
   --auth-encrypt-password 0 \
-  --rsession-path "${RSESSION_WRAPPER_FILE}"
+  --rsession-path "${RSESSION_WRAPPER_FILE}" \
+  --server-data-dir ${TMPDIR}

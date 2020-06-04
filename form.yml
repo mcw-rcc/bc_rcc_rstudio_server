@@ -7,8 +7,7 @@ form:
   - bc_num_hours
   - bc_email_on_started
 attributes:
-  Rserver: "rstudio-server/1.2.5042"
-  Rapp: "R/3.5.0"
+  Rserver: "rstudio-server/1.3.959"
   bc_num_hours:
     min: 1
     max: 8
@@ -17,7 +16,7 @@ attributes:
     widget: select
     label: "Instance type"
     help: |
-      - **Quick** - (*1 cores, 5GB memory*)
+      - **Quick** - (*2 cores, 4GB memory*)
       - **General Purpose** - (*4 cores, 20GB memory*)
       - **Compute Optimized** - (*8 cores, 64GB memory*)
       - **Memory Optimized** - (*8 cores, 256GB memory*)
@@ -26,3 +25,9 @@ attributes:
       - [ "General Purpose", "small" ]
       - [ "Compute Optimized", "medium" ]
       - [ "Memory Optimized", "large" ]
+  Rapp:
+    widget: select
+    label: "R Version"
+    options:
+      - [ "3.5.0", "R/3.5.0" ]
+      - [ "4.0.0", "R/4.0.0" ]
