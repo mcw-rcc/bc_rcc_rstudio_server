@@ -36,6 +36,9 @@ chmod 700 "${RSESSION_WRAPPER_FILE}"
 # Set working directory to home directory
 cd "${HOME}"
 
+# Create a unique $TMPDIR for runtime files
+#export TMPDIR="$(mktemp -d)"
+
 # Output debug info
 module list
 
