@@ -23,6 +23,7 @@ This creates a directory `~/rstudio_files/usr/lib/rstudio-server` that contains 
 # we use BCM so our shared filesystem for apps is /cm/shared/apps. Modify to suit your needs.
 cp -R ~/rstudio_files/usr/lib/rstudio-server/* /cm/shared/apps/rstudio-server/1.3.959
 ```
+Optionally add a modulefile to load env.
 
 ## RStudio Server OOD App
 To install the app:
@@ -30,7 +31,7 @@ To install the app:
 cd /var/www/ood/apps/sys 
 git clone https://github.com/mcw-rcc/bc_rcc_rstudio_server.git
 ```
-Modify `manifest.yml`, `form.yml`, and `submit.yml` for your site. The `template/script.sh.erb` should also be modified to suit your site. For instance, we use a modulefile to load RStudio Server, which is specific by site and should be by your site. The `rserver` command in `template/script.sh.erb` contains two new flags that allow 1.3.959 to function in a multi-user environment without PRoot or Singularity.
+Modify `manifest.yml`, `form.yml`, and `submit.yml` for your site. The `template/script.sh.erb` should also be modified to suit your site. For instance, we use a modulefile to load RStudio Server, which is specific by site and should be supplied by your site. The `rserver` command in `template/script.sh.erb` contains two new flags that allow 1.3.959 to function in a multi-user environment without PRoot or Singularity.
 ```
 rserver \
   --www-port ${port} \
