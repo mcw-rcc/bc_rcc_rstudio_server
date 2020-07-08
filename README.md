@@ -14,7 +14,7 @@ sudo yum install rstudio-server-rhel-1.3.959-x86_64.rpm
 ```
 However, many HPC sites like to control installation prefix. The provided RPM is not relocatable, but you can extract the files and move them manually.
 ```
-mkdir ~/rstudio_files
+mkdir ~/rstudio_files && cd ~/rstudio_files
 wget https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.3.959-x86_64.rpm
 rpm2cpio rstudio-1.2.5042-x86_64.rpm | cpio -idmv
 ```
