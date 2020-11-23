@@ -3,8 +3,13 @@ RStudio Server app for Open OnDemand
 
 Based on https://github.com/OSC/bc_osc_rstudio_server.
 
+# Description
+This guide is a help to install the OOD RStudio Server app without requiring PRoot and/or Singularity. Prior to RStudio Server 1.3###, some hard-coded file paths caused a conflict when running multiple RStudio Server instances on the same server, as is the case when more than one OOD job launches to the same compute node. PRoot/Singularity fixed this issue by creating a unique TMP_DIR which was mounted into the container at /tmp. This fix successfully separated multiple instances running on the same server. To my knowledge, this was the primary benefit of using PRoot/Singularity. 
+
+Starting in RStudio Server 1.3###, the developers added environment variables to control the location of those hard-coded files. This means that (in our case at least) PRoot/Singularity is no longer required for the OOD RStudio Server App.
+
 # Setup without PRoot/Singularity
-RStudio Server 1.3.959 enables RStudio OOD app to run without PRoot or Singularity. The developers added two flags for rserver that allow control of previously hard-coded file paths. You might still need PRoot or Singularity depending on your HPC environment, so your mileage may vary.
+RStudio Server 1.3.959 enables RStudio OOD app to run without PRoot or Singularity. The developers added two flags for rserver that allow control of previously hard-coded file paths. However, you might still need PRoot or Singularity for some other reason depending on your HPC environment.
 
 ## Install RStudio Server 1.3.959 CentOS 6/7
 The simplest way is to install using the RPM installer provided by RStudio.
@@ -16,7 +21,7 @@ However, many HPC sites like to control installation prefix. The provided RPM is
 ```
 mkdir ~/rstudio_files && cd ~/rstudio_files
 wget https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.3.959-x86_64.rpm
-rpm2cpio rstudio-1.2.5042-x86_64.rpm | cpio -idmv
+rpm2cpio rstudio-1.3.959-x86_64.rpm | cpio -idmv
 ```
 This creates a directory `~/rstudio_files/usr/lib/rstudio-server` that contains the files. Move these files to your shared filesystem.
 ```
