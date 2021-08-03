@@ -27,6 +27,8 @@
 ---
 batch_connect:
   template: "basic"
+  conn_params:
+    -  csrf_token
 script:
   email: <%= ENV["USER"] %>@mcw.edu
   queue_name: "<%= queue %>"

@@ -33,6 +33,18 @@ EOL
 )
 chmod 700 "${RSESSION_WRAPPER_FILE}"
 
+# Generate a database.conf file
+export DBCONF="${PWD}/database.conf"
+(
+umask 077
+sed 's/^ \{2\}//' > "${DBCONF}" << EOL
+  # set database location
+  provider=sqlite
+  directory=/tmp/${USER}/${SLURM_JOB_ID}/rstudio-server/db
+EOL
+)
+chmod 700 "${DBCONF}"
+
 # Set working directory to home directory
 cd "${HOME}"
 
@@ -52,4 +64,5 @@ rserver \
   --auth-encrypt-password 0 \
   --rsession-path "${RSESSION_WRAPPER_FILE}" \
   --server-data-dir "${TMPDIR}" \
-  --secure-cookie-key-file "${TMPDIR}/rstudio-server/secure-cookie-key"
+  --secure-cookie-key-file "${TMPDIR}/rstudio-server/secure-cookie-key" \
+  --database-config-file "${DBCONF}"
