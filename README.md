@@ -3,6 +3,9 @@ RStudio Server app for Open OnDemand
 
 Based on https://github.com/OSC/bc_osc_rstudio_server.
 
+# UPDATE
+If you are running RStudio Server 1.4 or above, use the https://github.com/mcw-rcc/bc_rcc_rstudio_server/tree/rstudio-1.4-updates branch.
+
 # Description
 This guide is a help to install the OOD RStudio Server app without requiring PRoot and/or Singularity. Prior to RStudio Server 1.3###, some hard-coded file paths caused a conflict when running multiple RStudio Server instances on the same server, as is the case when more than one OOD job launches to the same compute node. PRoot/Singularity fixed this issue by creating a unique TMP_DIR which was mounted into the container at /tmp. This fix successfully separated multiple instances running on the same server. To my knowledge, this was the primary benefit of using PRoot/Singularity. 
 
