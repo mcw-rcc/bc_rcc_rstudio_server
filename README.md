@@ -8,27 +8,30 @@ This guide is a help to install the OOD RStudio Server app without requiring PRo
 
 Starting in RStudio Server 1.3###, the developers added environment variables to control the location of those hard-coded files. This means that (in our case at least) PRoot/Singularity is no longer required for the OOD RStudio Server App.
 
-**UPDATES**: We now support RStudio Server 1.4.####. Several code changes are required (branch rstudio-1.4-server). Changes include a new database config file requirement for the rserver command, and a new auth requirement involving a CSRF token. Updated files include `template/script.sh.erb`, `template/before.sh.erb`, `submit.yml.erb`, and `view.html.erb`.
+## Requirements
+- [Lmod](https://lmod.readthedocs.io/en/latest/) or any environment module system
+- [R](https://www.r-project.org/)
+- [RStudio Server](https://www.rstudio.com/products/rstudio/download-server/) 1.4 or higher (any of the recent date based releases will work)
 
 # Setup without PRoot/Singularity
-RStudio Server 1.4.1717 enables RStudio OOD app to run without PRoot or Singularity. The developers added two flags for rserver that allow control of previously hard-coded file paths. However, you might still need PRoot or Singularity for some other reason depending on your HPC environment.
+RStudio Server 1.4.XXXX and above enables RStudio OOD app to run without PRoot or Singularity. The developers added two flags for rserver that allow control of previously hard-coded file paths. However, you might still need PRoot or Singularity for some other reason depending on your HPC environment.
 
-## Install RStudio Server 1.4.1717 CentOS 7
-The simplest way is to install using the RPM installer provided by RStudio.
+## Install RStudio Server
+The simplest way is to install using the RPM (we run CentOS 7) installer provided by RStudio.
 ```
-wget https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-1.4.1717-x86_64.rpm
-sudo yum install rstudio-server-rhel-1.4.1717-x86_64.rpm
+wget https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-2022.02.2-485-x86_64.rpm
+sudo yum install rstudio-server-rhel-2022.02.2-485-x86_64.rpm
 ```
 However, many HPC sites like to control installation prefix. The provided RPM is not relocatable, but you can extract the files and move them manually.
 ```
 mkdir ~/rstudio_files && cd ~/rstudio_files
-wget https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-1.4.1717-x86_64.rpm
-rpm2cpio rstudio-server-rhel-1.4.1717-x86_64.rpm | cpio -idmv
+wget https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-2022.02.2-485-x86_64.rpm
+rpm2cpio rstudio-server-rhel-2022.02.2-485-x86_64.rpm | cpio -idmv
 ```
 This creates a directory `~/rstudio_files/usr/lib/rstudio-server` that contains the files. Move these files to your shared filesystem.
 ```
 # Our shared filesystem for apps is /hpc/apps. Modify to suit your needs.
-cp -R ~/rstudio_files/usr/lib/rstudio-server/* /hpc/apps/rstudio-server/1.4.1717
+cp -R ~/rstudio_files/usr/lib/rstudio-server/* /hpc/apps/rstudio-server/2022.02.2-485
 ```
 Optionally add a modulefile to load env.
 
@@ -37,9 +40,9 @@ To install the app:
 ```
 cd /var/www/ood/apps/sys 
 git clone https://github.com/mcw-rcc/bc_rcc_rstudio_server.git
-cd bc_rcc_rstudio_server && git checkout rstudio-1.4-updates
+cd bc_rcc_rstudio_server
 ```
-Modify `manifest.yml`, `form.yml`, and `submit.yml` for your site. The `template/script.sh.erb` should also be modified to suit your site. For instance, we use a modulefile to load RStudio Server, which is specific by site and should be supplied by your site. The `rserver` command in `template/script.sh.erb` contains two flags that allow 1.3.959 and one additional flag for 1.4.1717 to function in a multi-user environment without PRoot or Singularity.
+Modify `manifest.yml`, `form.yml`, and `submit.yml.erb` for your site. The `template/script.sh.erb` should also be modified to suit your site. For instance, we use a modulefile to load RStudio Server, which is specific by site and should be supplied by your site.
 ```
 rserver \
   --www-port ${port} \
@@ -50,6 +53,7 @@ rserver \
   --server-data-dir "${TMPDIR}" \ 
   --secure-cookie-key-file "${TMPDIR}/rstudio-server/secure-cookie-key"
   --database-config-file "${DBCONF}"
+  --server-user $(whoami)
 ```
 `--server-data-dir "${TMPDIR}"` redirects output of PIDs from /var/run/rstudio-rsession to ${TMPDIR}.
 
