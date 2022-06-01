@@ -1,33 +1,22 @@
 ---
-cluster: "carley"
+cluster: "hpc"
 form:
   - Rserver
   - Rapp
-  - job_type
   - bc_num_hours
   - bc_email_on_started
 attributes:
-  Rserver: "rstudio-server/1.3.959"
   bc_num_hours:
     min: 1
     max: 8
     step: 1
-  job_type:
+  Rserver:
     widget: select
-    label: "Instance type"
-    help: |
-      - **Quick** - (*2 cores, 4GB memory*)
-      - **General Purpose** - (*4 cores, 20GB memory*)
-      - **Compute Optimized** - (*8 cores, 64GB memory*)
-      - **Memory Optimized** - (*8 cores, 256GB memory*)
+    label: "RStudio Server Version"
     options:
-      - [ "Quick", "quick" ]
-      - [ "General Purpose", "small" ]
-      - [ "Compute Optimized", "medium" ]
-      - [ "Memory Optimized", "large" ]
+      - [ "2022.02.2-485", "rstudio-server/2022.02.2-485" ]
   Rapp:
     widget: select
     label: "R Version"
     options:
-      - [ "3.5.0", "R/3.5.0" ]
-      - [ "4.0.1", "R/4.0.1" ]
+      - [ "4.0.4", "R/4.0.4" ]
